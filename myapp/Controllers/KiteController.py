@@ -1,7 +1,6 @@
 import json
-import datetime
 
-from datetime import timezone
+from datetime import timezone, datetime
 import time
 import numpy as np
 import pandas as pd
@@ -20,9 +19,10 @@ class KiteController:
         api_key = "o40me2j1newtpkip"
         access_token = "fuaNquqv2nKapaRw7UhWyLViQmYHHj3t"
         instrument_token = 18257666
-        from_date = "2021-12-01 09:30:00"
-        to_date = request.GET.get('date', '')+" "+request.GET.get('time', '')
-
+        from_date = request.GET.get('date', '')+" "+request.GET.get('time', '')
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        current_time = datetime.now().strftime("%H:%M:%S")
+        to_date = current_date+" "+current_time if current_time <= "15:29:00" else current_date+" "+"15:29:00"
         interval = "minute"
         
         kite = KiteConnect(api_key)

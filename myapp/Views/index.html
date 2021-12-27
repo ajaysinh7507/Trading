@@ -316,14 +316,8 @@
 {% block script %}
 <script>
     $(document).ready(function() {
-        var currentdate = new Date(); 
-        var date = currentdate.getFullYear() + "-"
-                + ((currentdate.getMonth()+1) < 10 ? "0"+(currentdate.getMonth()+1) : (currentdate.getMonth()+1))  + "-" 
-                + ((currentdate.getDate()) < 10 ? "0"+(currentdate.getDate()) : (currentdate.getDate()));
-        var time = ((currentdate.getHours()) < 10 ? "0"+(currentdate.getHours()) : (currentdate.getHours()) ) + ":"  
-                + ((currentdate.getMinutes()) < 10 ? "0"+(currentdate.getMinutes()) : (currentdate.getMinutes())) + ":" 
-                + ((currentdate.getSeconds()) < 10 ? "0"+(currentdate.getSeconds()) : (currentdate.getSeconds()));
-        
+        var date = "2021-12-01"
+        var time = "09:15:00"
         var chart;
 
         $.ajax({url: "{% url 'kite.getHistoricalData' %}"+"?date="+date+"&time="+time, success: function(data){
@@ -351,14 +345,6 @@
                             var ema_50_series = this.series[5];
                             
                             setInterval(function () {
-                                var currentdate = new Date(); 
-                                var date = currentdate.getFullYear() + "-"
-                                        + ((currentdate.getMonth()+1) < 10 ? "0"+(currentdate.getMonth()+1) : (currentdate.getMonth()+1))  + "-" 
-                                        + ((currentdate.getDate()) < 10 ? "0"+(currentdate.getDate()) : (currentdate.getDate()));
-                                var time = ((currentdate.getHours()) < 10 ? "0"+(currentdate.getHours()) : (currentdate.getHours()) ) + ":"  
-                                        + ((currentdate.getMinutes()) < 10 ? "0"+(currentdate.getMinutes()) : (currentdate.getMinutes())) + ":" 
-                                        + ((currentdate.getSeconds()) < 10 ? "0"+(currentdate.getSeconds()) : (currentdate.getSeconds()));
-                                        
                                 $.ajax({url: "{% url 'kite.getHistoricalData' %}"+"?date="+date+"&time="+time, success: function(data){
                     
                                     var chart_data_new = data['data']['candle_data'];
@@ -436,20 +422,20 @@
                     id: 'candlestick',
                     name: instrument_name,
                     data: chart_data,
-                    pointInterval: 60 * 1000
+                    
                 }, {
                     type: 'column',
                     id: 'volume',
                     name: 'Volume',
                     yAxis: 1,
                     data: volume_data,
-                    pointInterval: 60 * 1000
+                    
                 }, {
                     type: 'bb',
                     id: 'overlay',
                     name: 'Bollinger Bands',
                     linkedTo: 'candlestick',
-                    pointInterval: 60 * 1000
+                    
                 }, {
                     type: 'ema',
                     id: 'overlay',
@@ -460,7 +446,7 @@
                         enabled: false,
                     },
                     lineWidth: 2,
-                    pointInterval: 60 * 1000
+                    
                 }, {
                     type: 'ema',
                     id: 'overlay',
@@ -471,7 +457,7 @@
                         enabled: false,
                     },
                     lineWidth: 2,
-                    pointInterval: 60 * 1000
+                    
                 }, {
                     type: 'ema',
                     id: 'overlay',
@@ -482,13 +468,13 @@
                         enabled: false,
                     },
                     lineWidth: 2,
-                    pointInterval: 60 * 1000
+                    
                 },{
                     type: 'stochastic',
                     linkedTo: 'candlestick',
                     id: 'oscillator',
                     yAxis: 2,
-                    pointInterval: 60 * 1000
+                    
                 }, {
                     type: 'flags',
                     data: [{
