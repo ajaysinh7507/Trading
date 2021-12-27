@@ -1,0 +1,516 @@
+{% extends "app.html" %}
+{% block content %}
+    <div class="layout-px-spacing">
+
+        <div class="row layout-top-spacing">
+
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                <div class="widget widget-chart-one">
+                    <div class="widget-content">
+                        <div id="candle_chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                <div class="widget widget-activity-four">
+                    <div class="widget-heading">
+                        <h5 class="">Orders</h5>
+                        <hr>
+                    </div>
+                    <div class="widget-content">
+                        <div class="mt-container mx-auto" style="padding-bottom: 10px;">
+                            <div class="card" style="border-radius: 10px;">
+                                <div class="card-body" style="border-radius: 10px; box-shadow: 1px 1px 8px 0px #9ca2a7; font-weight: 600;">
+                                    <div class="row" style="align-items: end;padding-bottom: 10px;">
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                            <div class="col-md-8">
+                                                <span>2021-12-24</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <span class="badge badge-pills badge-success" style="font-size: 12px;padding-left: 10px; padding-right: 10px;">B</span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span>Bank Nifty 45100</span>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span>CE</span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row" style="align-items: center;">
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control form-select-xs form-bottom-line" id="qty" placeholder="Quantity">
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <span>@</span>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control form-select-xs form-bottom-line" id="price" placeholder="Price">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-info">Save</button>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-success">Market</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card" style="border-radius: 10px; margin-top: 12px;">
+                                <div class="card-body" style="border-radius: 10px; box-shadow: 1px 1px 8px 0px #9ca2a7; font-weight: 600;">
+                                    <div class="row" style="align-items: end;padding-bottom: 10px;">
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                            <div class="col-md-8">
+                                                <span>2021-12-24</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <span class="badge badge-pills badge-success" style="font-size: 12px;padding-left: 10px; padding-right: 10px;">B</span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span>09:45</span>
+                                        </div>
+                                        <div class="col-md-4 text-center">
+                                            <div class="row" style="align-items: center;">
+                                                <div class="col-md-5 text-right">
+                                                    <span>1000</span>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <span>@</span>
+                                                </div>
+                                                <div class="col-md-5 text-left">
+                                                    <span>240</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span>Bank Nifty 45100</span>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span>CE</span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row" style="align-items: end;padding-bottom: 10px;">
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                            <div class="col-md-8"></div>
+                                            <div class="col-md-3">
+                                                <span class="badge badge-pills badge-danger" style="font-size: 12px;padding-left: 10px; padding-right: 10px;">S</span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span>09:50</span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row" style="align-items: center;">
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control form-select-xs form-bottom-line" id="qty" placeholder="Quantity">
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <span>@</span>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control form-select-xs form-bottom-line" id="price" placeholder="Price">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="badge outline-badge-success" style="font-weight: 800;">+2500</span>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-info">Save</button>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-success">Market</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card" style="border-radius: 10px; margin-top: 12px;">
+                                <div class="card-body" style="border-radius: 10px; box-shadow: 1px 1px 8px 0px #9ca2a7; font-weight: 600;">
+                                    <div class="row" style="align-items: end;padding-bottom: 10px;">
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                            <div class="col-md-8">
+                                                <span>2021-12-24</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <span class="badge badge-pills badge-success" style="font-size: 12px;padding-left: 10px; padding-right: 10px;">B</span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span>09:45</span>
+                                        </div>
+                                        <div class="col-md-4 text-center">
+                                            <div class="row" style="align-items: center;">
+                                                <div class="col-md-5 text-right">
+                                                    <span>1000</span>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <span>@</span>
+                                                </div>
+                                                <div class="col-md-5 text-left">
+                                                    <span>240</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span>Bank Nifty 45100</span>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span>CE</span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row" style="align-items: end;padding-bottom: 10px;">
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                            <div class="col-md-8"></div>
+                                            <div class="col-md-3">
+                                                <span class="badge badge-pills badge-danger" style="font-size: 12px;padding-left: 10px; padding-right: 10px;">S</span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span>09:50</span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row" style="align-items: center;">
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control form-select-xs form-bottom-line" id="qty" placeholder="Quantity">
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <span>@</span>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <input type="text" class="form-control form-select-xs form-bottom-line" id="price" placeholder="Price">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="badge outline-badge-success" style="font-weight: 800;">+2500</span>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-info">Save</button>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-success">Market</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                <div class="widget widget-activity-four">
+                    <div class="widget-heading">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="">All Trades</h5>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <span class="badge outline-badge-primary" style="font-weight: 800; font-size: 14px;">+4500</span>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="widget-content">
+                        <div class="mt-container mx-auto" style="padding-bottom: 10px;">
+                            
+                            <div class="card" style="border-radius: 10px; margin-top: 12px;">
+                                <div class="card-body" style="border-radius: 10px; box-shadow: 1px 1px 8px 0px #9ca2a7; font-weight: 600;">
+                                    <div class="row" style="align-items: end;padding-bottom: 10px;">
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                            <div class="col-md-8">
+                                                <span>2021-12-24</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <span class="badge badge-pills badge-success" style="font-size: 12px;padding-left: 10px; padding-right: 10px;">B</span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span>09:45</span>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <div class="row" style="align-items: center;">
+                                                <div class="col-md-5 text-right">
+                                                    <span>1000</span>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <span>@</span>
+                                                </div>
+                                                <div class="col-md-5 text-left">
+                                                    <span>240</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span>Bank Nifty 45100</span>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span>CE</span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row" style="align-items: end;padding-bottom: 10px;">
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                            <div class="col-md-8"></div>
+                                            <div class="col-md-3">
+                                                <span class="badge badge-pills badge-danger" style="font-size: 12px;padding-left: 10px; padding-right: 10px;">S</span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span>09:50</span>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <div class="row" style="align-items: center;">
+                                                <div class="col-md-5 text-right">
+                                                    <span>1000</span>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <span>@</span>
+                                                </div>
+                                                <div class="col-md-5 text-left">
+                                                    <span>240</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span>Bank Nifty 45100</span>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span>CE</span>
+                                        </div>
+                                        <div class="col-md-2 text-right">
+                                            <span class="badge outline-badge-success" style="font-weight: 800;">+2500</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function() {
+        var currentdate = new Date(); 
+        var date = currentdate.getFullYear() + "-"
+                + ((currentdate.getMonth()+1) < 10 ? "0"+(currentdate.getMonth()+1) : (currentdate.getMonth()+1))  + "-" 
+                + ((currentdate.getDate()) < 10 ? "0"+(currentdate.getDate()) : (currentdate.getDate()));
+        var time = ((currentdate.getHours()) < 10 ? "0"+(currentdate.getHours()) : (currentdate.getHours()) ) + ":"  
+                + ((currentdate.getMinutes()) < 10 ? "0"+(currentdate.getMinutes()) : (currentdate.getMinutes())) + ":" 
+                + ((currentdate.getSeconds()) < 10 ? "0"+(currentdate.getSeconds()) : (currentdate.getSeconds()));
+        
+        var chart;
+
+        $.ajax({url: "{% url 'kite.getHistoricalData' %}"+"?date="+date+"&time="+time, success: function(data){
+            
+            instrument_name = data['instrument']
+            chart_data = data['data']['candle_data']
+            volume_data = data['data']['volume_data']
+            bb_data = data['data']['bb_data']
+            ema_data = data['data']['ema_data']
+            stoch_data = data['data']['stoch_data']
+            
+            title = instrument_name+' stock price by minute'
+            
+            chart = Highcharts.stockChart('candle_chart', {
+                chart: {
+                    height: '50%',
+                    events: {
+                        load() {
+                            
+                            // set up the updating of the chart each second
+                            var candle_series = this.series[0];
+                            var volume_series = this.series[1];
+                            var ema_7_series = this.series[3];
+                            var ema_21_series = this.series[4];
+                            var ema_50_series = this.series[5];
+                            
+                            setInterval(function () {
+                                var currentdate = new Date(); 
+                                var date = currentdate.getFullYear() + "-"
+                                        + ((currentdate.getMonth()+1) < 10 ? "0"+(currentdate.getMonth()+1) : (currentdate.getMonth()+1))  + "-" 
+                                        + ((currentdate.getDate()) < 10 ? "0"+(currentdate.getDate()) : (currentdate.getDate()));
+                                var time = ((currentdate.getHours()) < 10 ? "0"+(currentdate.getHours()) : (currentdate.getHours()) ) + ":"  
+                                        + ((currentdate.getMinutes()) < 10 ? "0"+(currentdate.getMinutes()) : (currentdate.getMinutes())) + ":" 
+                                        + ((currentdate.getSeconds()) < 10 ? "0"+(currentdate.getSeconds()) : (currentdate.getSeconds()));
+                                        
+                                $.ajax({url: "{% url 'kite.getHistoricalData' %}"+"?date="+date+"&time="+time, success: function(data){
+                    
+                                    var chart_data_new = data['data']['candle_data'];
+                                    var volume_data_new = data['data']['volume_data'];
+                                    var bb_data_new = data['data']['bb_data'];
+                                    var ema_data_new = data['data']['ema_data'];
+                                    var stoch_data = data['data']['stoch_data'];
+                                    
+                                    candle_series.addPoint(chart_data_new[chart_data_new.length - 1], true, true);
+                                    
+                                    volume_series.addPoint(volume_data_new[volume_data_new.length - 1], true, true);
+                                    
+                                    ema_7_series.addPoint(ema_data_new['ema_7'][ema_data_new['ema_7'].length -  1], true, true);
+                                    
+                                    ema_21_series.addPoint(ema_data_new['ema_21'][ema_data_new['ema_21'].length - 1], true, true);
+                                    
+                                    ema_50_series.addPoint(ema_data_new['ema_50'][ema_data_new['ema_50'].length - 1], true, true);
+                                    
+                                }});
+                            }, 50000);
+                        }
+                    }
+                },
+                title: {
+                    text: title
+                },
+                legend: {
+                    enabled: true
+                },
+                rangeSelector: {
+                    buttons: [{
+                        type: 'hour',
+                        count: 1,
+                        text: '1h'
+                    }, {
+                        type: 'day',
+                        count: 1,
+                        text: '1D'
+                    }, {
+                        type: 'all',
+                        count: 1,
+                        text: 'All'
+                    }],
+                    selected: 1,
+                    inputEnabled: false
+                },
+                yAxis: [{
+                    height: '60%'
+                }, {
+                    top: '60%',
+                    height: '20%'
+                }, {
+                    top: '80%',
+                    height: '20%'
+                }],
+                plotOptions: {
+                    series: {
+                        showInLegend: true
+                    },
+                    candlestick: {
+                        upColor: '#0c8150a8',
+                        color: '#f52f24ad',
+                        upLineColor: '#0c8150',
+                        lineColor: '#f52f24',
+                    }
+                },
+                navigator: {
+                    series: {
+                        color: '#2e71ff',
+                        lineWidth: 2
+                    }
+                },
+                series: [{
+                    type: 'candlestick',
+                    id: 'candlestick',
+                    name: instrument_name,
+                    data: chart_data,
+                    pointInterval: 60 * 1000
+                }, {
+                    type: 'column',
+                    id: 'volume',
+                    name: 'Volume',
+                    yAxis: 1,
+                    data: volume_data,
+                    pointInterval: 60 * 1000
+                }, {
+                    type: 'bb',
+                    id: 'overlay',
+                    name: 'Bollinger Bands',
+                    linkedTo: 'candlestick',
+                    pointInterval: 60 * 1000
+                }, {
+                    type: 'ema',
+                    id: 'overlay',
+                    name: 'EMA (7)',
+                    data: ema_data['ema_7'],
+                    marker: {
+                        symbol: 'none',
+                        enabled: false,
+                    },
+                    lineWidth: 2,
+                    pointInterval: 60 * 1000
+                }, {
+                    type: 'ema',
+                    id: 'overlay',
+                    name: 'EMA (21)',
+                    data: ema_data['ema_21'],
+                    marker: {
+                        symbol: 'none',
+                        enabled: false,
+                    },
+                    lineWidth: 2,
+                    pointInterval: 60 * 1000
+                }, {
+                    type: 'ema',
+                    id: 'overlay',
+                    name: 'EMA (50)',
+                    data: ema_data['ema_50'],
+                    marker: {
+                        symbol: 'none',
+                        enabled: false,
+                    },
+                    lineWidth: 2,
+                    pointInterval: 60 * 1000
+                },{
+                    type: 'stochastic',
+                    linkedTo: 'candlestick',
+                    id: 'oscillator',
+                    yAxis: 2,
+                    pointInterval: 60 * 1000
+                }, {
+                    type: 'flags',
+                    data: [{
+                        x: 1640012940000,
+                        title: 'A',
+                        text: 'Shape: "squarepin"'
+                    }, {
+                        x: 1640013420000,
+                        title: 'A',
+                        text: 'Shape: "squarepin"'
+                    }],
+                    onSeries: 'dataseries',
+                    shape: 'circlepin',
+                    color:'green',
+                    width: 16
+                }]
+            });
+
+        }});
+        
+        // }, 10000);
+        // create the chart
+    });
+</script>
+{% endblock %}
