@@ -1,23 +1,19 @@
 import json
-
-from datetime import timezone, datetime
-import time
 import numpy as np
 import pandas as pd
-from django.shortcuts import render
+import talib as ta
+from datetime import timezone, datetime
 from django.http import HttpResponse
 from kiteconnect import KiteConnect
-import talib as ta
 
-from myapp.MiddlewareDecorator import isAuth
-
+from myapp.Middlewares.AuthMiddlewareDecorator import isAuth
 class KiteController:
 
     # @isAuth()
     def getHistoricalData(request):
         
         api_key = "o40me2j1newtpkip"
-        access_token = "fuaNquqv2nKapaRw7UhWyLViQmYHHj3t"
+        access_token = "D11ruFJyXEeE3tUOkkkCVDu7q6R7HSTs"
         instrument_token = 18257666
         from_date = request.GET.get('date', '')+" "+request.GET.get('time', '')
         current_date = datetime.now().strftime("%Y-%m-%d")

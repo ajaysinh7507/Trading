@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 import jwt
 
-from utils.mongodb import get_db_handle, get_collection_handle
+from myapp.Utils.mongodb import get_db_handle, get_collection_handle
 from myproject.settings import JWT_SECRET
 
 class AuthMiddleware:

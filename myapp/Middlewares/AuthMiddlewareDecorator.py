@@ -2,7 +2,7 @@ import jwt
 from bson import ObjectId
 from django.http import HttpResponseRedirect
 
-from myapp.utils.mongodb import get_db_handle, get_collection_handle
+from myapp.Utils.mongodb import get_db_handle, get_collection_handle
 from myproject.settings import JWT_SECRET
 
 def isAuth():

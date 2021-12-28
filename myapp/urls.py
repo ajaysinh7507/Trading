@@ -9,5 +9,7 @@ urlpatterns = [
     path('login', AuthController.viewLogin, name="login"),
     path('auth-login', AuthController.authLogin, name="authLogin"),
 
-    path('get-historical-data', KiteController.getHistoricalData, name="kite.getHistoricalData")
+    path('get-historical-data', KiteController.getHistoricalData, name="kite.getHistoricalData"),
+    
+    path('add-user', DemoController.user, name="add.user")
 ]
