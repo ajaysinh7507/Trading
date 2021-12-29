@@ -6,6 +6,7 @@ from .Controllers.KiteController import KiteController
 
 urlpatterns = [
     path('home', DemoController.dashboard, name="home"),
+    path(r'^login/', AuthController.viewLogin, name="login"),
     path('login', AuthController.viewLogin, name="login"),
     path('auth-login', AuthController.authLogin, name="authLogin"),
 

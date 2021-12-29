@@ -1,21 +1,24 @@
 from django.shortcuts import redirect, render
-from django.http import HttpResponse, HttpResponseRedirect
-import numpy as np
-import jwt
-from myproject.settings import JWT_SECRET
 
-
-from myapp.Utils.mongodb import get_db_handle, get_collection_handle
 from myapp.Utils.bcrypt import checkHash
+
 from myapp.Middlewares.AuthMiddlewareDecorator import isAuth
-from myapp.Middlewares.UserMiddlewareDecorator import checkAuthLogin
+from myapp.Middlewares.RequestMiddlewareDecorator import validateRequestData
+
+from myapp.Validation.UserValidation import loginSchema
+
+from myapp.Models.User import User
 class AuthController:
     
     def viewLogin(request):
-        
-        return render(request, "login.html")
+        session_error = {}
+        if request.session.get('error'):
+            session_error = request.session.get('error')
+            del request.session['error']
+            
+        return render(request, "login.html", {'session_error': session_error})
     
-    @checkAuthLogin()
+    @validateRequestData(loginSchema(), 'login')
     def authLogin(request):
         
         if request.method == "POST":
@@ -24,10 +27,7 @@ class AuthController:
             email = body.get('username')
             password = body.get('password')
 
-            db_handle = get_db_handle()
-            user = get_collection_handle(db_handle, "users")
-            
-            user = user.find_one({"email": email, 'status': True})
+            user = User.getOne({"email": email, 'status': True})
 
             if not user:
                 return redirect('login')
