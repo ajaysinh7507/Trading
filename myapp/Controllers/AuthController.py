@@ -1,5 +1,8 @@
+import jwt
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 
+from myproject.settings import JWT_SECRET
 from myapp.Utils.bcrypt import checkHash
 
 from myapp.Middlewares.AuthMiddlewareDecorator import isAuth
@@ -7,7 +10,7 @@ from myapp.Middlewares.RequestMiddlewareDecorator import validateRequestData
 
 from myapp.Validation.UserValidation import loginSchema
 
-from myapp.Models.User import User
+import myapp.Models.User as UserClass
 class AuthController:
     
     def viewLogin(request):
@@ -26,19 +29,20 @@ class AuthController:
             
             email = body.get('username')
             password = body.get('password')
-
-            user = User.getOne({"email": email, 'status': True})
-
-            if not user:
+            
+            user = UserClass.User().getOne({"email": email, 'status': True})
+            user = user["result"]
+            
+            if not user or not user["status"]:
                 return redirect('login')
                 
             if checkHash(password, user['password']):
-                # encoded_jwt = jwt.encode({"_id": str(user['_id'])}, JWT_SECRET, algorithm="HS256")
+                encoded_jwt = jwt.encode({"_id": str(user['_id'])}, JWT_SECRET, algorithm="HS256")
                 
-                # response = HttpResponseRedirect('home')
-                # response.set_cookie("authToken", encoded_jwt)
+                response = HttpResponseRedirect('home')
+                response.set_cookie("authToken", encoded_jwt)
                 
-                return redirect('login')
+                return response
             else:
                 print("in else")
                 return redirect('login')

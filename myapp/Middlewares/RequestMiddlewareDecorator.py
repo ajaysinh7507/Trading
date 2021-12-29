@@ -38,6 +38,7 @@ def validateRequestData(validator_schema, redirect):
                     return view_func(request, *args, **kwargs)
             
             except Exception as e:
+                    print(e)
                     return HttpResponseRedirect(reverse(redirect, args=({"status": False, "error": "There is issue with some value"},)))
             
         return wrap
