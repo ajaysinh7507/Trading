@@ -1,3 +1,4 @@
+import pandas as pd
 from myapp.Utils.mongodb import get_db_handle, get_collection_handle
 from myapp.Utils.ValidateDBData import ValidateDBData
 
@@ -36,7 +37,9 @@ class Script:
     def getAll(self, query={}, sort={}):
         try:
             Script = self.script
-            result = list(Script.find(query))
+            df = pd.DataFrame(Script.find(query))
+            df = df.fillna(0)
+            result = df.to_dict('records')
             
             return {"status": True, "result": result}
         except Exception as e:

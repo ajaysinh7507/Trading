@@ -10,6 +10,7 @@ class ScriptController:
     
     def getAllScript(request):
         scripts = ScriptClass.Script().getAll({"status": True})
-        value = json.dumps(json_util.dumps(scripts))
-        # print(len(scripts["result"]))
+        print("before", scripts)
+        value = json.dumps(json_util.dumps(scripts), allow_nan=False)
+        # print("data",len(value))
         return HttpResponse(value, content_type='application/json')

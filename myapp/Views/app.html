@@ -33,6 +33,28 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+    <style>
+        .border-top {
+            border-top: 2px solid black;
+        }
+
+        .call-labels {
+            color: darkgreen;
+        }
+
+        .put-labels {
+            color: red;
+        }
+
+        .ceLowerClass {
+            color: blue;
+        }
+
+        .peLowerClass {
+            color: orange;
+        }
+    </style>
+
 </head>
 <body>
     <!-- BEGIN LOADER -->
@@ -232,7 +254,7 @@
     <!--  BEGIN NAVBAR  -->
     <div class="sub-header-container">
         <div class="col-md-12 navbar">
-            <div class="col-md-2" style="max-width: 14%; flex: 14%;">
+            <div class="col-md-2">
                 <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
             </div>
             <div class="col-md-1" style="text-align: center; border-right: 1px solid #dbdbdb; ; border-left: 1px solid #dbdbdb;">
@@ -278,46 +300,62 @@
         <!--  BEGIN SIDEBAR  -->
         <div class="sidebar-wrapper sidebar-theme">
             
-            <div class="row sidebar-option">
-                <select class="selectpicker form-control height-auto" data-live-search="true" id="script_dropdown">
-                    <option >Bank Nifty</option>
-                    <option >Bank Nifty</option>
-                    <option >Bank Nifty</option>
-                    <option >Bank Nifty</option>
-                    <option >Bank Nifty</option>
-                </select>
+            <div class="row sidebar-option" id="script_dropdown">
+                
             </div>
             <nav id="sidebar" style="z-index: 1; position: relative;">
                 <div class="shadow-bottom"></div>
                 <ul class="list-unstyled menu-categories" id="accordionExample">
                     <li class="menu">
-                        <a href="#dashboard" data-active="true" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <a href="#CE" data-active="true" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
                             <div class="">
-                                <span>Bank Nifty </span>
+                                <span>CE</span>
                             </div>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             </div>
                         </a>
-                        <ul class="collapse submenu list-unstyled show" id="dashboard" data-parent="#accordionExample">
-                            <li class="active">
-                                <button data-transaction-type="buy" class="trade-btn-xs buy-btn">B</button>
-                                <button data-transaction-type="sell" class="trade-btn-xs sell-btn">S</button>
-                            </li>
-                            <li class="active">
-                                <a href="index.html"> Sales </a>
-                            </li>
-                            <li>
-                                <a href="index2.html"> Analytics </a>
-                            </li>
+                        <ul class="collapse submenu list-unstyled show call-list" id="CE" data-parent="#accordionExample">
+                            <!-- <li class="active">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <a href="index.html" style="margin-left: 0px;"> Sales </a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button data-transaction-type="buy" class="trade-btn-xs buy-btn">B</button>
+                                        <button data-transaction-type="sell" class="trade-btn-xs sell-btn">S</button>
+                                    </div>
+                                </div>
+                                
+                            </li> -->
                         </ul>
                     </li>
-                    
-                    
+                    <li class="menu">
+                        <a href="#PE" data-active="true" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                            <div class="">
+                                <span>PE</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled show put-list" id="PE" data-parent="#accordionExample">
+                            <!-- <li class="active">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <a href="index.html" style="margin-left: 0px;"> Sales </a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button data-transaction-type="buy" class="trade-btn-xs buy-btn">B</button>
+                                        <button data-transaction-type="sell" class="trade-btn-xs sell-btn">S</button>
+                                    </div>
+                                </div>
+                                
+                            </li> -->
+                        </ul>
+                    </li>
                 </ul>
-                
             </nav>
-
         </div>
         <!--  END SIDEBAR  -->
         
@@ -397,8 +435,9 @@
     <script src="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
     <script src="{% static 'plugins/bootstrap-select/bootstrap-select.min.js' %}"></script>
     <script src="{% static 'assets/js/app.js' %}"></script>
-    
-    
+    <script src="{% static 'assets/js/ticker/calc.js' %}"></script>
+    <script src="{% static 'assets/js/ticker/kiteconnect.js' %}"></script>
+    <!--  -->
     <script>
         $(document).ready(function() {
             App.init();
@@ -406,7 +445,21 @@
 
         $(document).ready(function(){
             $.ajax({url: "{% url 'script.getAllScript' %}", success: function(data){
-                console.log(data)
+                data = JSON.parse(data)
+                var dropdown = '<select class="selectpicker form-control height-auto" data-live-search="true" style="display: inline-block !important">';
+                
+                $.map(data["result"], function(dt){
+                    console.log("hello")
+                    
+                    if(dt['name'] == "BANKNIFTY"){
+                        dropdown += "<option value='"+dt['instrument_token']+"' selected>"+dt["tradingsymbol"]+"</option>";
+                    }else{
+                        dropdown += "<option value='"+dt['instrument_token']+"'>"+dt["tradingsymbol"]+"</option>";
+                    }
+                })
+                
+                dropdown += '</select>'
+                $('#script_dropdown').html(dropdown);
             }});
         })
     </script>

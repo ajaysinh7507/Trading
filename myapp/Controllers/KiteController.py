@@ -13,8 +13,8 @@ class KiteController:
     def getHistoricalData(request):
         
         api_key = "o40me2j1newtpkip"
-        access_token = "gzQiNdj7zznfkzgser1Ujgw0KZE0f1pG"
-        instrument_token = 18257666
+        access_token = "7IH5B0PMIzSwCbSTWCiHyv3owvFFxvai"
+        instrument_token = 13379330
         from_date = request.GET.get('date', '')+" "+request.GET.get('time', '')
         current_date = datetime.now().strftime("%Y-%m-%d")
         current_time = datetime.now().strftime("%H:%M:%S")
@@ -45,6 +45,18 @@ class KiteController:
         formated_data = obj.formatHistoricalData(historical_data, bb_u, bb_m, bb_l, ema_7, ema_21, ema_50, stoch_k, stoch_d)
         
         return HttpResponse(json.dumps({"instrument": "BANKNIFTY21DECFUT","data":formated_data}), content_type='application/json')
+    
+    def orderPlace(request):
+
+        api_key = "o40me2j1newtpkip"
+        access_token = "7IH5B0PMIzSwCbSTWCiHyv3owvFFxvai"
+
+        kite = KiteConnect(api_key)
+        kite.set_access_token(access_token)
+        
+        kite.place_order("ACC",price=1460,variety= kite.VARIETY_BO,exchange=kite.EXCHANGE_NSE,transaction_type=kite.TRANSACTION_TYPE_SELL,quantity=50,squareoff=20,stoploss=10,order_type=kite.ORDER_TYPE_LIMIT,product=kite.PRODUCT_BO, trailing_stoploss=1)
+
+        return HttpResponse(json.dumps({"status": True}), content_type='application/json')
 
     def formatHistoricalData(request, datas, bb_u, bb_m, bb_l, ema_7, ema_21, ema_50, stoch_k, stoch_d):
         
@@ -95,3 +107,5 @@ class KiteController:
 
         return {'candle_data': candle_data_arr, 'volume_data': volume_data_arr, 'bb_data': bb_data, 'ema_data': ema_data, 'stoch_data': stoch_data}
         # return {'candle_data': candle_data_arr, 'volume_data': volume_data_arr, 'bb_u_data':  bb_u_data_arr, 'bb_m_data': bb_m_data_arr, 'bb_l_data': bb_l_data_arr, 'ema_7_data': ema_7_data_arr, 'ema_21_data': ema_21_data_arr, 'ema_50_data': ema_50_data_arr, 'stoch_k_data': stoch_k_data_arr, 'stoch_d_data': stoch_d_data_arr}
+    
+    

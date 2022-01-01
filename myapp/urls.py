@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('get-script-data', ScriptController.getAllScript, name="script.getAllScript"),
     path('get-historical-data', KiteController.getHistoricalData, name="kite.getHistoricalData"),
+    path('kite-order-place', KiteController.orderPlace, name="kite.order.place"),
     
     path('add-user', DemoController.user, name="add.user")
 ]
