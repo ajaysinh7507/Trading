@@ -13,7 +13,7 @@ class KiteController:
     def getHistoricalData(request):
         
         api_key = "o40me2j1newtpkip"
-        access_token = "7IH5B0PMIzSwCbSTWCiHyv3owvFFxvai"
+        access_token = "7Ls2x4OzY48uDZPSTVzuEiqHkU87nAak"
         instrument_token = 13379330
         from_date = request.GET.get('date', '')+" "+request.GET.get('time', '')
         current_date = datetime.now().strftime("%Y-%m-%d")
