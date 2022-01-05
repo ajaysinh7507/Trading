@@ -13,7 +13,7 @@ class KiteController:
     def getHistoricalData(request):
         
         api_key = "o40me2j1newtpkip"
-        access_token = "7Ls2x4OzY48uDZPSTVzuEiqHkU87nAak"
+        access_token = "to0X5j76rFNhkEnTm7R0vgyePIx3Tpg8"
         instrument_token = 13379330
         from_date = request.GET.get('date', '')+" "+request.GET.get('time', '')
         current_date = datetime.now().strftime("%Y-%m-%d")
@@ -47,14 +47,19 @@ class KiteController:
         return HttpResponse(json.dumps({"instrument": "BANKNIFTY21DECFUT","data":formated_data}), content_type='application/json')
     
     def orderPlace(request):
-
         api_key = "o40me2j1newtpkip"
-        access_token = "7IH5B0PMIzSwCbSTWCiHyv3owvFFxvai"
+        access_token = "to0X5j76rFNhkEnTm7R0vgyePIx3Tpg8"
 
-        kite = KiteConnect(api_key)
-        kite.set_access_token(access_token)
+        body = request.POST
         
-        kite.place_order("ACC",price=1460,variety= kite.VARIETY_BO,exchange=kite.EXCHANGE_NSE,transaction_type=kite.TRANSACTION_TYPE_SELL,quantity=50,squareoff=20,stoploss=10,order_type=kite.ORDER_TYPE_LIMIT,product=kite.PRODUCT_BO, trailing_stoploss=1)
+        quantity = body.get('quantity')
+        order_type = body.get('order_type')
+        price = body.get('price')
+        transaction_type = body.get('transaction_type')
+        tradingsymbol = body.get('tradingsymbol')
+        # kite = KiteConnect(api_key)
+        # kite.set_access_token(access_token)
+        # kite.place_order(variety="regular", exchange="NFO", tradingsymbol=tradingsymbol, quantity=quantity, product=kite.PRODUCT_BO, order_type=order_type, price=price,transaction_type=transaction_type)
 
         return HttpResponse(json.dumps({"status": True}), content_type='application/json')
 

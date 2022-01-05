@@ -306,7 +306,7 @@
                 </div>
                 <div class="col-md-12">
                     <hr>
-                    <span class="13379330">20000</span>
+                    <span class="13379330_text">20000</span>
                 </div>
             </div>
             <nav id="sidebar" style="z-index: 1; position: relative;">
@@ -391,19 +391,13 @@
                     &nbsp;
                     <div class="trading-info-container">
                         <span class="transaction-script-name"> 
-                        BANKNIFTY DEC FUT
-                        </span>
-                        <span class="transaction-script-exchange"> 
-                            NFO
+                            BANKNIFTY DEC FUT
                         </span>
                     </div>
-                    <span class="transaction-text">x</span>
-                    <span class="transaction-qty">
-                        0 QTY
-                    </span> 
                 </div>
                 <div class="price-information">
-                NFO: ₹<span class="market-price">35,892.95</span></div>
+                    NFO: ₹<span class="market-price">35,892.95</span>
+                </div>
             </div>
     
             <div class="trade-modal-body">
@@ -411,16 +405,18 @@
                     <div class="col-md-6">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="trade_type" id="market_radio" value="Market" checked>
-                            <label class="form-check-label" for="market_radio">Market</label>
+                            <label class="form-check-label" for="market_radio" style="cursor: pointer;">Market</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="trade_type" id="limit_radio" value="Limit">
-                            <label class="form-check-label" for="limit_radio">Limit</label>
+                            <label class="form-check-label" for="limit_radio" style="cursor: pointer;">Limit</label>
                         </div>
                     </div>
                 </div>
                 <hr>
                 <div class="row" >
+                    <input type="hidden" name="modal_transaction_type_input">
+                    <input type="hidden" name="modal_tradingsymbol_input">
                     <div class="col-md-6">
                     <div class="input-group">
                         <label class="input-label">Qty.</label>
@@ -430,14 +426,14 @@
                     <div class="col-md-6">
                     <div class="input-group">
                         <label class="input-label">Price.</label>
-                        <input class="input-container price-input" name="modal_price" data-disabled="false" type="number" value="35463" placeholder="Price" autocorrect="off" disabled> 
+                        <input class="input-container price-input" name="modal_price" data-disabled="false" type="number" value="0" placeholder="Price" autocorrect="off" disabled> 
                     </div>
                     </div>
                 </div>
             </div>
     
             <div class="trade-modal-footer">
-                <button data-transaction-type="buy" class="trade-btn buy-btn modal-trade-btn">Buy</button>
+                <button data-transaction-type="buy" class="trade-btn buy-btn modal-trade-btn" id="modal_btn_buy">Buy</button>
                 <button data-transaction-type="cancel" class="cancel-btn close-modal">CANCEL</button>
             </div>
     
@@ -469,8 +465,6 @@
                 var dropdown = '<select class="selectpicker form-control height-auto" data-live-search="true" style="display: inline-block !important">';
                 
                 $.map(data["result"], function(dt){
-                    console.log("hello")
-                    
                     if(dt['name'] == "BANKNIFTY"){
                         dropdown += "<option value='"+dt['instrument_token']+"' selected>"+dt["tradingsymbol"]+"</option>";
                     }else{
@@ -481,17 +475,35 @@
                 dropdown += '</select>'
                 $('#script_dropdown').html(dropdown);
             }});
-            
-        })
+        });
 
         $('input[name=trade_type').change(function(){
             if($(this).val() == "Market"){
-                $("input[name=modal_price]").prop('disabled', true);
+                var price_input = $("input[name=modal_price]");
+                price_input.prop('disabled', true);
+                price_input.val(0);
             }
             else{
-                $("input[name=modal_price]").prop('disabled', false);
+                var price_input = $("input[name=modal_price]");
+                var live_price = parseFloat($('.market-price').text());
+                price_input.prop('disabled', false);
+                price_input.val(live_price);
             }
         });
+
+        $('#modal_btn_buy').click(function(){
+            var quantity = $('input[name=modal_qty]').val();
+            var order_type = $('input[name=trade_type').val();
+            var price = $('input[name=modal_price]').val();
+            var transaction_type = $('input[name=modal_transaction_type_input]').val();
+            var tradingsymbol = $('input[name=modal_tradingsymbol_input]').val();
+            
+            var data = {csrfmiddlewaretoken: '{{ csrf_token }}',quantity: quantity, order_type: order_type, price: price, transaction_type: transaction_type, tradingsymbol: tradingsymbol};
+            
+            $.ajax({url: "{% url 'kite.order.place' %}", type: "POST", data: data, success: function(data){
+                alert("order placed");
+            }});
+        })
 
     </script>
     {% block script %}
