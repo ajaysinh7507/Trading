@@ -434,7 +434,7 @@
     
             <div class="trade-modal-footer">
                 <button data-transaction-type="buy" class="trade-btn buy-btn modal-trade-btn" id="modal_btn_buy">Buy</button>
-                <button data-transaction-type="cancel" class="cancel-btn close-modal">CANCEL</button>
+                <button data-transaction-type="cancel" class="cancel-btn close-modal" id="modal_btn_cancel">CANCEL</button>
             </div>
     
         </div>
@@ -501,6 +501,7 @@
             var data = {csrfmiddlewaretoken: '{{ csrf_token }}',quantity: quantity, order_type: order_type, price: price, transaction_type: transaction_type, tradingsymbol: tradingsymbol};
             
             $.ajax({url: "{% url 'kite.order.place' %}", type: "POST", data: data, success: function(data){
+                $('#modal_btn_cancel').trigger("click");
                 alert("order placed");
             }});
         })
