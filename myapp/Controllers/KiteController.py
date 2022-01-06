@@ -7,13 +7,16 @@ from django.http import HttpResponse
 from kiteconnect import KiteConnect
 
 from myapp.Middlewares.AuthMiddlewareDecorator import isAuth
+
+import myapp.Models.Script as ScriptClass
+import myapp.Models.Order as OrderClass
 class KiteController:
 
     # @isAuth()
     def getHistoricalData(request):
         
         api_key = "o40me2j1newtpkip"
-        access_token = "to0X5j76rFNhkEnTm7R0vgyePIx3Tpg8"
+        access_token = "0RGo7uax1IslPcev8cCS0byYc8p946fM"
         instrument_token = 13379330
         from_date = request.GET.get('date', '')+" "+request.GET.get('time', '')
         current_date = datetime.now().strftime("%Y-%m-%d")
@@ -47,21 +50,42 @@ class KiteController:
         return HttpResponse(json.dumps({"instrument": "BANKNIFTY21DECFUT","data":formated_data}), content_type='application/json')
     
     def orderPlace(request):
-        api_key = "o40me2j1newtpkip"
-        access_token = "to0X5j76rFNhkEnTm7R0vgyePIx3Tpg8"
+        try:
+            api_key = "o40me2j1newtpkip"
+            access_token = "0RGo7uax1IslPcev8cCS0byYc8p946fM"
+            
+            auth = request.auth
+            body = request.POST
+            
+            quantity = int(body.get('quantity'))
+            order_type = body.get('order_type').upper()
+            price = body.get('price')
+            transaction_type = body.get('transaction_type').upper()
+            tradingsymbol = body.get('tradingsymbol')
 
-        body = request.POST
-        
-        quantity = body.get('quantity')
-        order_type = body.get('order_type')
-        price = body.get('price')
-        transaction_type = body.get('transaction_type')
-        tradingsymbol = body.get('tradingsymbol')
-        # kite = KiteConnect(api_key)
-        # kite.set_access_token(access_token)
-        # kite.place_order(variety="regular", exchange="NFO", tradingsymbol=tradingsymbol, quantity=quantity, product=kite.PRODUCT_BO, order_type=order_type, price=price,transaction_type=transaction_type)
+            current_date = datetime.today().strftime('%Y-%m-%d')
+            current_time = datetime.today().strftime("%H:%M:%S")
+            
+            variety = "regular"
+            exchange = "NFO"
+            product = "MIS"
 
-        return HttpResponse(json.dumps({"status": True}), content_type='application/json')
+            script = ScriptClass.Script().getOne({"tradingsymbol": tradingsymbol})
+            script = script["result"]
+            
+            
+            kite = KiteConnect(api_key)
+            kite.set_access_token(access_token)
+            order_id = kite.place_order(variety="regular", exchange="NFO", tradingsymbol=tradingsymbol, quantity=quantity, product='MIS', order_type=order_type, price=price, transaction_type=transaction_type)
+            
+            order_data = {"user_id": auth['_id'], "script_id": script['_id'], "variety": variety, "exchange": exchange, "tradingsymbol": tradingsymbol, "quantity": quantity, "product": product, "order_type": order_type, "price": price, "order_id": order_id, "transaction_type": transaction_type, "trade_date": current_date, "trade_time": current_time, "status": True}
+
+            res = OrderClass.Order().create(order_data)
+            # print(res)
+
+            return HttpResponse(json.dumps({"status": True}), content_type='application/json')
+        except Exception as e:
+            print(e)
 
     def formatHistoricalData(request, datas, bb_u, bb_m, bb_l, ema_7, ema_21, ema_50, stoch_k, stoch_d):
         

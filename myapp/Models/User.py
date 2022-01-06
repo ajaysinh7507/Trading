@@ -6,12 +6,12 @@ class User:
         self.db_handle = get_db_handle()
         self.user = get_collection_handle(self.db_handle, "users")
         self.schema = {
-                        "firstName": "str",
-                        "lastName": "str",
-                        "mobileNo": "str",
-                        "email": "str",
-                        "status": "bool",
-                        "date": "str"
+                        "firstName": str,
+                        "lastName": str,
+                        "mobileNo": str,
+                        "email": str,
+                        "status": bool,
+                        "date": str
                     }
     
     def getOne(self, query={}):

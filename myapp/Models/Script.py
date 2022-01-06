@@ -6,22 +6,22 @@ class Script:
     
     def __init__(self):
         self.db_handle = get_db_handle()
-        self.script = get_collection_handle(self.db_handle, "script")
+        self.script = get_collection_handle(self.db_handle, "scripts")
         self.schema = {
-                        "instrument_token": "int",
-                        "exchange_token": "int",
-                        "tradingsymbol": "str",
-                        "name": "str",
-                        "last_price": "float",
-                        "expiry": "str",
-                        "strike": "float",
-                        "tick_size": "float",
-                        "lot_size": "int",
-                        "instrument_type": "str",
-                        "segment": "str",
-                        "exchange": "str",
-                        "date": "str",
-                        "status": "bool",
+                        "instrument_token": int,
+                        "exchange_token": int,
+                        "tradingsymbol": str,
+                        "name": str,
+                        "last_price": float,
+                        "expiry": str,
+                        "strike": float,
+                        "tick_size": float,
+                        "lot_size": int,
+                        "instrument_type": str,
+                        "segment": str,
+                        "exchange": str,
+                        "date": str,
+                        "status": bool,
                     }
     
     def getOne(self, query={}):

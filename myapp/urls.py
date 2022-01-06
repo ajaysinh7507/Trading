@@ -10,7 +10,7 @@ urlpatterns = [
     path('login', AuthController.viewLogin, name="login"),
     path('auth-login', AuthController.authLogin, name="authLogin"),
 
-    path('get-script-data', ScriptController.getAllScript, name="script.getAllScript"),
+    path('get-script-data', ScriptController.getScript, name="script.getScript"),
     path('get-historical-data', KiteController.getHistoricalData, name="kite.getHistoricalData"),
     path('kite-order-place', KiteController.orderPlace, name="kite.order.place"),
     

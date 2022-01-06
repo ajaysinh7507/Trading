@@ -301,12 +301,22 @@
         <div class="sidebar-wrapper sidebar-theme">
             
             <div class="row sidebar-option">
-                <div class="col-md-12" id="script_dropdown">
-
+                <div class="col-md-12">
+                    <select class="selectpicker form-control height-auto" id="script_dropdown" data-live-search="true" style="display: inline-block !important" onchange="getScript()">
+                        <option value="BANKNIFTY" selected="selected">Bank Nifty</option>
+                    </select>
                 </div>
                 <div class="col-md-12">
                     <hr>
-                    <span class="13379330_text">20000</span>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <span class="script-name"></span>
+                        </div>
+                        <div class="col-md-4" style="text-align: right;">
+                            <span class="script-price 13379330_text"></span>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
             <nav id="sidebar" style="z-index: 1; position: relative;">
@@ -457,25 +467,21 @@
     <script>
         $(document).ready(function() {
             App.init();
+            getScript();
         })
 
-        $(document).ready(function(){
-            $.ajax({url: "{% url 'script.getAllScript' %}", success: function(data){
+        function getScript(){
+            var script_name = $('#script_dropdown :selected').val();
+            
+            $.ajax({url: "{% url 'script.getScript' %}"+"?script_name="+script_name, success: function(data){
                 data = JSON.parse(data)
-                var dropdown = '<select class="selectpicker form-control height-auto" data-live-search="true" style="display: inline-block !important">';
-                
-                $.map(data["result"], function(dt){
-                    if(dt['name'] == "BANKNIFTY"){
-                        dropdown += "<option value='"+dt['instrument_token']+"' selected>"+dt["tradingsymbol"]+"</option>";
-                    }else{
-                        dropdown += "<option value='"+dt['instrument_token']+"'>"+dt["tradingsymbol"]+"</option>";
-                    }
-                })
-                
-                dropdown += '</select>'
-                $('#script_dropdown').html(dropdown);
+                data = data["response"]
+                localStorage.setItem('all_tokens', JSON.stringify(data["all_tokens"]));
+
+                $('.script-name').text(data['tradingsymbol'])
+                $('.script-price').attr('class', `script-price ${data['instrument_token']}`)
             }});
-        });
+        }
 
         $('input[name=trade_type').change(function(){
             if($(this).val() == "Market"){

@@ -8,17 +8,17 @@ class Position:
         self.db_handle = get_db_handle()
         self.position = get_collection_handle(self.db_handle, "position")
         self.schema = {
-                        "nfo_details": "str", 
-                        "trading_symbol": "str", 
-                        "instrument_token": "str", 
-                        "down_step": "str", 
-                        "Position_id1": "str", 
-                        "option_type": "str", 
-                        "transaction_type": "str", 
-                        "quantity": "int",  
-                        "trade_time1": "str", 
-                        "trade_date1": "str", 
-                        "status": "bool"
+                        "nfo_details": str, 
+                        "trading_symbol": str, 
+                        "instrument_token": str, 
+                        "down_step": str, 
+                        "Position_id1": str, 
+                        "option_type": str, 
+                        "transaction_type": str, 
+                        "quantity": int,  
+                        "trade_time1": str, 
+                        "trade_date1": str, 
+                        "status": bool
                     }
     
     def getOne(self, query={}):

@@ -1,25 +1,30 @@
 import pandas as pd
+import bson
 from myapp.Utils.mongodb import get_db_handle, get_collection_handle
 from myapp.Utils.ValidateDBData import ValidateDBData
+
 
 class Order:
     
     def __init__(self):
         self.db_handle = get_db_handle()
         self.order = get_collection_handle(self.db_handle, "order")
+
         self.schema = {
-                        "nfo_details": "str", 
-                        "position_id": "str", 
-                        "trading_symbol": "str", 
-                        "order_id": "str", 
-                        "option_type": "str", 
-                        "quantity": "int", 
-                        "transaction_type": "str", 
-                        "trade_time": "str", 
-                        "trade_date": "str", 
-                        "down_step": "str", 
-                        "nfo_order_type": "str", 
-                        "status": "bool"
+                        "user_id": bson.objectId.ObjectId,
+                        "script_id": bson.objectid.ObjectId, 
+                        "variety": str,
+                        "exchange": str,
+                        "tradingsymbol": str, 
+                        "quantity": int, 
+                        "product": str,
+                        "order_type": str,
+                        "price": str,
+                        "order_id": str, 
+                        "transaction_type": str, 
+                        "trade_time": str, 
+                        "trade_date": str, 
+                        "status": bool
                     }
     
     def getOne(self, query={}):
