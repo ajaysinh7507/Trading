@@ -13,16 +13,17 @@ import myapp.Models.Order as OrderClass
 class KiteController:
 
     # @isAuth()
-    def getHistoricalData(request):
+    def getHistoricalData(request, script_instrument_token):
         
         api_key = "o40me2j1newtpkip"
-        access_token = "0RGo7uax1IslPcev8cCS0byYc8p946fM"
-        instrument_token = 13379330
+        access_token = "5ki45xzI07WP3eOrBcdMPIqul9eOLulq"
+        interval = "minute"
+
+        instrument_token = script_instrument_token
         from_date = request.GET.get('date', '')+" "+request.GET.get('time', '')
         current_date = datetime.now().strftime("%Y-%m-%d")
         current_time = datetime.now().strftime("%H:%M:%S")
         to_date = current_date+" "+current_time if current_time <= "15:29:00" else current_date+" "+"15:29:00"
-        interval = "minute"
         
         kite = KiteConnect(api_key)
         kite.set_access_token(access_token)
@@ -46,13 +47,17 @@ class KiteController:
 
         obj = KiteController()
         formated_data = obj.formatHistoricalData(historical_data, bb_u, bb_m, bb_l, ema_7, ema_21, ema_50, stoch_k, stoch_d)
+
+        script = ScriptClass.Script().getOne({"instrument_token": instrument_token})
+        script = script['result']
         
-        return HttpResponse(json.dumps({"instrument": "BANKNIFTY21DECFUT","data":formated_data}), content_type='application/json')
+        return HttpResponse(json.dumps({"instrument": script['tradingsymbol'],"data":formated_data}), content_type='application/json')
     
+    @isAuth()
     def orderPlace(request):
         try:
             api_key = "o40me2j1newtpkip"
-            access_token = "0RGo7uax1IslPcev8cCS0byYc8p946fM"
+            access_token = "5ki45xzI07WP3eOrBcdMPIqul9eOLulq"
             
             auth = request.auth
             body = request.POST
@@ -70,17 +75,19 @@ class KiteController:
             exchange = "NFO"
             product = "MIS"
 
+            print("+++++++++ trading symbol +++++++++++++++++", tradingsymbol)
+
             script = ScriptClass.Script().getOne({"tradingsymbol": tradingsymbol})
             script = script["result"]
             
             
-            kite = KiteConnect(api_key)
-            kite.set_access_token(access_token)
-            order_id = kite.place_order(variety="regular", exchange="NFO", tradingsymbol=tradingsymbol, quantity=quantity, product='MIS', order_type=order_type, price=price, transaction_type=transaction_type)
+            # kite = KiteConnect(api_key)
+            # kite.set_access_token(access_token)
+            # order_id = kite.place_order(variety="regular", exchange="NFO", tradingsymbol=tradingsymbol, quantity=quantity, product='MIS', order_type=order_type, price=price, transaction_type=transaction_type)
             
-            order_data = {"user_id": auth['_id'], "script_id": script['_id'], "variety": variety, "exchange": exchange, "tradingsymbol": tradingsymbol, "quantity": quantity, "product": product, "order_type": order_type, "price": price, "order_id": order_id, "transaction_type": transaction_type, "trade_date": current_date, "trade_time": current_time, "status": True}
+            # order_data = {"user_id": auth['_id'], "script_id": script['_id'], "variety": variety, "exchange": exchange, "tradingsymbol": tradingsymbol, "quantity": quantity, "product": product, "order_type": order_type, "price": price, "order_id": order_id, "transaction_type": transaction_type, "trade_date": current_date, "trade_time": current_time, "status": True}
 
-            res = OrderClass.Order().create(order_data)
+            # res = OrderClass.Order().create(order_data)
             # print(res)
 
             return HttpResponse(json.dumps({"status": True}), content_type='application/json')

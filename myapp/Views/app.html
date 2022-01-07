@@ -479,6 +479,7 @@
                 localStorage.setItem('all_tokens', JSON.stringify(data["all_tokens"]));
 
                 $('.script-name').text(data['tradingsymbol'])
+                $('.script-name').data("script_instrument_token", data['instrument_token'])
                 $('.script-price').attr('class', `script-price ${data['instrument_token']}`)
             }});
         }

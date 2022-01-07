@@ -304,7 +304,7 @@
         var time = "09:15:00"
         var chart;
 
-        $.ajax({url: "{% url 'kite.getHistoricalData' %}"+"?date="+date+"&time="+time, success: function(data){
+        $.ajax({url: "{% url 'kite.getHistoricalData' script_instrument_token=script_instrument_token %}"+"?date="+date+"&time="+time, success: function(data){
             
             instrument_name = data['instrument']
             chart_data = data['data']['candle_data']
@@ -329,7 +329,7 @@
                             var ema_50_series = this.series[5];
                             
                             setInterval(function () {
-                                $.ajax({url: "{% url 'kite.getHistoricalData' %}"+"?date="+date+"&time="+time, success: function(data){
+                                $.ajax({url: "{% url 'kite.getHistoricalData' script_instrument_token=script_instrument_token %}"+"?date="+date+"&time="+time, success: function(data){
                     
                                     var chart_data_new = data['data']['candle_data'];
                                     var volume_data_new = data['data']['volume_data'];

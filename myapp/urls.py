@@ -7,11 +7,12 @@ from .Controllers.ScriptController import ScriptController
 
 urlpatterns = [
     path('home', DemoController.dashboard, name="home"),
+    path('dashboard/<int:instrument_token>', DemoController.homeDashboard, name="home.instrument_token"),
     path('login', AuthController.viewLogin, name="login"),
     path('auth-login', AuthController.authLogin, name="authLogin"),
 
     path('get-script-data', ScriptController.getScript, name="script.getScript"),
-    path('get-historical-data', KiteController.getHistoricalData, name="kite.getHistoricalData"),
+    path('get-historical-data/<int:script_instrument_token>', KiteController.getHistoricalData, name="kite.getHistoricalData"),
     path('kite-order-place', KiteController.orderPlace, name="kite.order.place"),
     
     path('add-user', DemoController.user, name="add.user")
