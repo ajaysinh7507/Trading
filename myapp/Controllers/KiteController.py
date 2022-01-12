@@ -1,3 +1,4 @@
+import os
 import json
 import numpy as np
 import pandas as pd
@@ -16,7 +17,7 @@ class KiteController:
     def getHistoricalData(request, script_instrument_token):
         
         api_key = "o40me2j1newtpkip"
-        access_token = "5ki45xzI07WP3eOrBcdMPIqul9eOLulq"
+        access_token = "vPhr737KwM33LfYBZ51yJoyceaF2XUA6"
         interval = "minute"
 
         instrument_token = script_instrument_token
@@ -57,7 +58,7 @@ class KiteController:
     def orderPlace(request):
         try:
             api_key = "o40me2j1newtpkip"
-            access_token = "5ki45xzI07WP3eOrBcdMPIqul9eOLulq"
+            access_token = "vPhr737KwM33LfYBZ51yJoyceaF2XUA6"
             
             auth = request.auth
             body = request.POST
@@ -93,6 +94,13 @@ class KiteController:
             return HttpResponse(json.dumps({"status": True}), content_type='application/json')
         except Exception as e:
             print(e)
+
+    def orderPostBack(request):
+        f = open(os.path.join("myapp","static", "temp.text"), 'w')
+        f.write("hello")
+
+        return HttpResponse(json.dumps({"status": True}), content_type='application/json')
+
 
     def formatHistoricalData(request, datas, bb_u, bb_m, bb_l, ema_7, ema_21, ema_50, stoch_k, stoch_d):
         

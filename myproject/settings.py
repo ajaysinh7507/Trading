@@ -16,10 +16,10 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DB_HOST = "localhost"
+DB_HOST = "trade.easydevices.in"
 DB_PORT = 27017
-DB_USERNAME = ""
-DB_PASSWORD = ""
+DB_USERNAME = "admin"
+DB_PASSWORD = "admin@Trade22"
 
 JWT_SECRET = "n6On-T7Z&h5_wvF@9Tsv9K@wK!Ur"
 

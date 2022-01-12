@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 import jwt
 from bson import ObjectId
 from django.http import HttpResponseRedirect
@@ -23,18 +24,18 @@ def isAuth():
                         
                         return view_func(request, *args, **kwargs)   
                     else:
-                        response = HttpResponseRedirect('login')
+                        response = redirect('login')
                         response.delete_cookie("authToken")
                         
                         return response
                 else:
-                    response = HttpResponseRedirect('login')
+                    response = redirect('login')
                     response.delete_cookie("authToken")
                     
                     return response
 
             except Exception as e:
-                response = HttpResponseRedirect('login')
+                response = redirect('login')
                 response.delete_cookie("authToken")
                 
                 return response

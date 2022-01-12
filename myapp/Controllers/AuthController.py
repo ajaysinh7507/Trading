@@ -37,7 +37,7 @@ class AuthController:
                 return redirect('login')
                 
             if checkHash(password, user['password']):
-                encoded_jwt = jwt.encode({"_id": str(user['_id'])}, JWT_SECRET, algorithm="HS256")
+                encoded_jwt = jwt.encode({"_id": str(user['_id'])}, JWT_SECRET, algorithm="HS256").decode('UTF-8')
                 
                 response = HttpResponseRedirect('home')
                 response.set_cookie("authToken", encoded_jwt)

@@ -481,6 +481,7 @@
 
                 $('.script-name').text(data['tradingsymbol'])
                 $('.script-name').data("script_instrument_token", data['instrument_token'])
+                $('.script-name').data("sub_script_expiry", data['next_thurs_expiry'])
                 $('.script-price').attr('class', `script-price ${data['instrument_token']}`)
             }});
         }
