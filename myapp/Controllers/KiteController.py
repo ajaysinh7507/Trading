@@ -17,7 +17,7 @@ class KiteController:
     def getHistoricalData(request, script_instrument_token):
         
         api_key = "o40me2j1newtpkip"
-        access_token = "vPhr737KwM33LfYBZ51yJoyceaF2XUA6"
+        access_token = "1DEAUFOBNLQydLmoZaABastX5ikw6S4a"
         interval = "minute"
 
         instrument_token = script_instrument_token
@@ -58,7 +58,7 @@ class KiteController:
     def orderPlace(request):
         try:
             api_key = "o40me2j1newtpkip"
-            access_token = "vPhr737KwM33LfYBZ51yJoyceaF2XUA6"
+            access_token = "1DEAUFOBNLQydLmoZaABastX5ikw6S4a"
             
             auth = request.auth
             body = request.POST
@@ -86,7 +86,7 @@ class KiteController:
             # kite.set_access_token(access_token)
             # order_id = kite.place_order(variety="regular", exchange="NFO", tradingsymbol=tradingsymbol, quantity=quantity, product='MIS', order_type=order_type, price=price, transaction_type=transaction_type)
             
-            # order_data = {"user_id": auth['_id'], "script_id": script['_id'], "variety": variety, "exchange": exchange, "tradingsymbol": tradingsymbol, "quantity": quantity, "product": product, "order_type": order_type, "price": price, "order_id": order_id, "transaction_type": transaction_type, "trade_date": current_date, "trade_time": current_time, "status": True}
+            # order_data = {"user_id": auth['_id'], "script_id": script['_id'], "variety": variety, "exchange": exchange, "tradingsymbol": tradingsymbol, "instrument_token": script["instrument_token"], "quantity": str(quantity), "product": product, "order_type": order_type, "price": price, "order_id": order_id, "transaction_type": transaction_type, "trade_date": current_date, "trade_time": current_time, "status": "Pending"}
 
             # res = OrderClass.Order().create(order_data)
             # print(res)
@@ -96,8 +96,36 @@ class KiteController:
             print(e)
 
     def orderPostBack(request):
-        f = open(os.path.join("myapp","static", "temp.text"), 'w')
-        f.write("hello")
+        api_key = "o40me2j1newtpkip"
+        access_token = "1DEAUFOBNLQydLmoZaABastX5ikw6S4a"
+
+        body = request.POST
+        order_id = body['order_id']
+        status = body['status']
+        otimestamp = body['order_timestamp']
+        quantity = abs(body['quantity'])
+        pending_quantity = abs(body['pending_quantity'])
+        price = body['average_price']
+        instrument_token = body['instrument_token']
+        tradingsymbol = body['tradingsymbol']
+        transaction_type = body['transaction_type']
+        exchange = body['exchange']
+        profit = "null"
+        limit_profit = "null"
+        stoploss = "null"
+        
+        kite = KiteConnect(api_key)
+        kite.set_access_token(access_token)   
+        positions = kite.positions()
+
+        order = OrderClass.Order().getOne({"order_id": order_id})
+        order = order["result"]
+
+        if order:
+            script_id = order["script_id"]
+        else:
+            print("order not found")
+            return HttpResponse(json.dumps({"status": False}), content_type='application/json')
 
         return HttpResponse(json.dumps({"status": True}), content_type='application/json')
 

@@ -11,20 +11,27 @@ class Order:
         self.order = get_collection_handle(self.db_handle, "order")
 
         self.schema = {
+                        "kite_user_id": str,
                         "user_id": bson.objectId.ObjectId,
                         "script_id": bson.objectid.ObjectId, 
                         "variety": str,
                         "exchange": str,
                         "tradingsymbol": str, 
-                        "quantity": int, 
+                        "instrument_token": str,
+                        "quantity": str, 
+                        "filled_quantity": str,
+                        "pending_quantity": str,
+                        "cancelled_quantity": str,
                         "product": str,
                         "order_type": str,
                         "price": str,
+                        "trigger_price": str,
+                        "average_price": str,
                         "order_id": str, 
                         "transaction_type": str, 
                         "trade_time": str, 
                         "trade_date": str, 
-                        "status": bool
+                        "status": str
                     }
     
     def getOne(self, query={}):

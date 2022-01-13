@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from myproject.settings import JWT_SECRET
 from myapp.Utils.bcrypt import checkHash
 
+from django.views.decorators.csrf import csrf_exempt
 from myapp.Middlewares.AuthMiddlewareDecorator import isAuth
 from myapp.Middlewares.RequestMiddlewareDecorator import validateRequestData
 
@@ -21,6 +22,7 @@ class AuthController:
             
         return render(request, "login.html", {'session_error': session_error})
     
+    @csrf_exempt
     @validateRequestData(loginSchema(), 'login')
     def authLogin(request):
         
@@ -37,7 +39,7 @@ class AuthController:
                 return redirect('login')
                 
             if checkHash(password, user['password']):
-                encoded_jwt = jwt.encode({"_id": str(user['_id'])}, JWT_SECRET, algorithm="HS256").decode('UTF-8')
+                encoded_jwt = jwt.encode({"_id": str(user['_id'])}, JWT_SECRET, algorithm="HS256")
                 
                 response = HttpResponseRedirect('home')
                 response.set_cookie("authToken", encoded_jwt)
