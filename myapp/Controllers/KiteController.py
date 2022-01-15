@@ -1,5 +1,8 @@
+from ast import Or
+from asyncio.windows_events import NULL
 import os
 import json
+from turtle import pos
 import numpy as np
 import pandas as pd
 import talib as ta
@@ -17,7 +20,7 @@ class KiteController:
     def getHistoricalData(request, script_instrument_token):
         
         api_key = "o40me2j1newtpkip"
-        access_token = "1DEAUFOBNLQydLmoZaABastX5ikw6S4a"
+        access_token = "Qj9DU9r7RkLo4je26EuSiTb5JEyfepj0"
         interval = "minute"
 
         instrument_token = script_instrument_token
@@ -58,7 +61,7 @@ class KiteController:
     def orderPlace(request):
         try:
             api_key = "o40me2j1newtpkip"
-            access_token = "1DEAUFOBNLQydLmoZaABastX5ikw6S4a"
+            access_token = "Qj9DU9r7RkLo4je26EuSiTb5JEyfepj0"
             
             auth = request.auth
             body = request.POST
@@ -82,14 +85,14 @@ class KiteController:
             script = script["result"]
             
             
-            # kite = KiteConnect(api_key)
-            # kite.set_access_token(access_token)
-            # order_id = kite.place_order(variety="regular", exchange="NFO", tradingsymbol=tradingsymbol, quantity=quantity, product='MIS', order_type=order_type, price=price, transaction_type=transaction_type)
+            kite = KiteConnect(api_key)
+            kite.set_access_token(access_token)
+            order_id = kite.place_order(variety="regular", exchange="NFO", tradingsymbol=tradingsymbol, quantity=quantity, product='MIS', order_type=order_type, price=price, transaction_type=transaction_type)
             
-            # order_data = {"user_id": auth['_id'], "script_id": script['_id'], "variety": variety, "exchange": exchange, "tradingsymbol": tradingsymbol, "instrument_token": script["instrument_token"], "quantity": str(quantity), "product": product, "order_type": order_type, "price": price, "order_id": order_id, "transaction_type": transaction_type, "trade_date": current_date, "trade_time": current_time, "status": "Pending"}
+            order_data = {"user_id": auth['_id'], "script_id": script['_id'], "variety": variety, "exchange": exchange, "tradingsymbol": tradingsymbol, "instrument_token": script["instrument_token"], "quantity": str(quantity), "product": product, "order_type": order_type, "price": price, "order_id": order_id, "transaction_type": transaction_type, "trade_date": current_date, "trade_time": current_time, "status": "Pending"}
 
-            # res = OrderClass.Order().create(order_data)
-            # print(res)
+            res = OrderClass.Order().create(order_data)
+            print(res)
 
             return HttpResponse(json.dumps({"status": True}), content_type='application/json')
         except Exception as e:
@@ -97,7 +100,10 @@ class KiteController:
 
     def orderPostBack(request):
         api_key = "o40me2j1newtpkip"
-        access_token = "1DEAUFOBNLQydLmoZaABastX5ikw6S4a"
+        access_token = "Qj9DU9r7RkLo4je26EuSiTb5JEyfepj0"
+
+        current_date = datetime.today().strftime('%Y-%m-%d')
+        current_time = datetime.today().strftime("%H:%M:%S")
 
         body = request.POST
         order_id = body['order_id']
@@ -114,19 +120,48 @@ class KiteController:
         limit_profit = "null"
         stoploss = "null"
         
-        kite = KiteConnect(api_key)
-        kite.set_access_token(access_token)   
-        positions = kite.positions()
+        f = open(os.path.join("myapp","static","post_back_logs", order_id+".text"), 'a')
+        logs_list = ["\n\n\n=============================="+current_date+" "+current_time+"==============================\n", json.dumps(request.POST)]
 
         order = OrderClass.Order().getOne({"order_id": order_id})
         order = order["result"]
 
-        if order:
-            script_id = order["script_id"]
-        else:
+        if not (order or order == NULL):
+            logs_list.append("\n=>ORDER NOT FOUND")
+            f.writelines(logs_list)
+            f.close()
             print("order not found")
+            
             return HttpResponse(json.dumps({"status": False}), content_type='application/json')
+        
+        update_order = OrderClass.Order().update({"order_id": order_id}, {"status": status})
 
+        if not update_order["status"]:
+            logs_list.append("\n=>There is problem to update order with status"+status)
+            f.writelines(logs_list)
+            f.close()
+            
+            return HttpResponse(json.dumps({"status": False}), content_type='application/json')
+            
+        logs_list.append("\n=>Order updated with status"+status)
+       
+        script_id = order["script_id"]
+        
+        kite = KiteConnect(api_key)
+        kite.set_access_token(access_token)   
+        positions = kite.positions()
+        
+        # if len(positions["net"]) > 0:
+
+        #     for pos in positions["net"]:
+                
+        #         if pos["quantity"] == 0 and pos["instrument_token"] == instrument_token:
+                    
+
+        
+        logs_list.append("\n=>SUCCESSFULLY DONE")
+        f.writelines(logs_list)
+        f.close()
         return HttpResponse(json.dumps({"status": True}), content_type='application/json')
 
 

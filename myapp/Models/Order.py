@@ -71,4 +71,19 @@ class Order:
             print(e)
             return {"status": False, "error": e}   
 
+    def update(self, query, data):
+        try:
+            validate_res = ValidateDBData(self.schema, data)
+
+            if not validate_res["status"]:
+                return validate_res
+
+            Order = self.order
+            result = Order.update_one(query, data)
+
+            return {"status": True, "result": result}
+        except Exception as e:
+            print(e)
+            return {"status": False, "error": e}   
+
             
