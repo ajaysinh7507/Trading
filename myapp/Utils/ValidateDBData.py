@@ -5,11 +5,10 @@ def ValidateDBData(validator_schema, data):
     for key in keys:
         
         if not key in validator_schema.keys():
-            error_messages.append({key: key+" is undefined."})
+            error_messages[key] = key+" is undefined."
             continue
         else:
-            print(data[key], validator_schema[key])
-            if not isinstance(data[key], validator_schema[key]) :
+            if not isinstance(data[key], validator_schema[key]):
                 error_messages[key] = key+" is required.".capitalize()+" type : "+str(type(data[key]))
                                         
     if len(error_messages) > 0:

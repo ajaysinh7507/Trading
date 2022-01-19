@@ -511,7 +511,12 @@
             
             $.ajax({url: "{% url 'kite.order.place' %}", type: "POST", data: data, success: function(data){
                 $('#modal_btn_cancel').trigger("click");
-                alert("order placed");
+                if(data["status"]){
+                    alert(data["message"]);
+                }
+                else{
+                    alert("there is an issue to place order");
+                }
             }});
         })
 

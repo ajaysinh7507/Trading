@@ -14,7 +14,7 @@ def validateRequestData(validator_schema, redirect):
                         if key in auth_fields:
                                 continue
                         if not key in validator_schema.keys():
-                                error_messages.append({key: key+" is undefined."})
+                                error_messages[key] = key+" is undefined."
                                 continue
                         else:
                                 if "required" in validator_schema[key]:

@@ -1,26 +1,29 @@
 import pandas as pd
+import bson
 from myapp.Utils.mongodb import get_db_handle, get_collection_handle
 from myapp.Utils.ValidateDBData import ValidateDBData
-
 class Position:
     
     def __init__(self):
         self.db_handle = get_db_handle()
         self.position = get_collection_handle(self.db_handle, "position")
         self.schema = {
-                        "nfo_details": str, 
-                        "trading_symbol": str, 
-                        "instrument_token": str, 
-                        "down_step": str, 
-                        "Position_id1": str, 
-                        "option_type": str, 
-                        "transaction_type": str, 
-                        "quantity": int,  
-                        "trade_time1": str, 
-                        "trade_date1": str, 
-                        "status": bool
+                        "user_id": bson.objectid.ObjectId,
+                        "tradingsymbol": str,
+                        "exchange": str,
+                        "instrument_token": int,
+                        "product": str,
+                        "quantity": int,
+                        "average_price": float,
+                        "pnl": float,
+                        "buy_quantity": int,
+                        "buy_price": float,
+                        "sell_quantity": int,
+                        "sell_price": float,
+                        "date_time": str,
+                        "status": str,
                     }
-    
+
     def getOne(self, query={}):
         try:
             Position = self.position
@@ -46,16 +49,30 @@ class Position:
     def create(self, data):
         try:
             validate_res = ValidateDBData(self.schema, data)
+            if not validate_res["status"]:
+                return validate_res
+            
+            Position = self.position
+            result = Position.insert_one(data)
+            
+            return {"status": True, "result": result}
+        except Exception as e:
+            print(e)
+            return {"status": False, "error": e}   
+
+    def update(self, query, data):
+        try:
+            validate_res = ValidateDBData(self.schema, data)
 
             if not validate_res["status"]:
                 return validate_res
 
             Position = self.position
-            result = Position.insert_one(data)
+            result = Position.update_one(query, {"$set": data})
 
             return {"status": True, "result": result}
         except Exception as e:
             print(e)
-            return {"status": False, "error": e}   
+            return {"status": False, "error": e}
 
             

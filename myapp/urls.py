@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.urls import path,include
-from .Controllers.DemoController import DemoController
-from .Controllers.AuthController import AuthController
-from .Controllers.KiteController import KiteController
-from .Controllers.ScriptController import ScriptController
+from myapp.Controllers.DemoController import DemoController
+from myapp.Controllers.AuthController import AuthController
+from myapp.Controllers.KiteController import KiteController
+from myapp.Controllers.ScriptController import ScriptController
 
 urlpatterns = [
     path('', DemoController.dashboard, name="index"),
