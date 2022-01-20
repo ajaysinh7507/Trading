@@ -1,3 +1,5 @@
+from cmath import isnan
+import math
 import pandas as pd
 import bson
 from myapp.Utils.mongodb import get_db_handle, get_collection_handle
@@ -23,7 +25,16 @@ class Trade:
                         "buy_date": str,
                         "buy_time": str,
                         "sell_date": str,
-                        "sell_time": str
+                        "sell_time": str,
+                        "turnover": float,
+                        "stt_total": float,
+                        "etc": float,
+                        "stax":  float,
+                        "sebi_charges":  float,
+                        "stamp_charges":  float,
+                        "total_tax":  float,
+                        "breakeven":  float,
+                        "net_profit":  float,
                     }
 
     def getOne(self, query={}):
@@ -76,4 +87,29 @@ class Trade:
             print(e)
             return {"status": False, "error": e}
 
-            
+    def calculateBrokerage(self, buy_price, sell_price, qty):
+        brokerage = 40
+
+        if math.isnan(buy_price) or buy_price == 0:
+            buy_price = 0
+            bse_tran_charge_buy = 0
+            brokerage = 20
+        
+        if math.isnan(sell_price) or sell_price == 0:
+            sell_price = 0
+            bse_tran_charge_sell = 0
+            brokerage = 20
+
+        pnl = round(float((sell_price - buy_price) * qty), 2)
+        turnover = round(float((buy_price + sell_price) * qty), 2)
+        stt_total = round(float(sell_price * qty * 0.0005), 2)
+        etc = round(float(0.00053 * turnover), 2)
+        stax = round(float(0.18 * (brokerage + etc)), 2)
+        sebi_charges = round(float(turnover * 0.000001), 2)
+        stamp_charges = round(float(buy_price * qty * 0.00003), 2)
+        total_tax = round(float(brokerage + stt_total + etc + stax + sebi_charges + stamp_charges), 2)
+        breakeven = round(float(total_tax / qty), 2)
+        breakeven =   0.0 if math.isnan(breakeven) else breakeven
+        net_profit = round(float((pnl) - total_tax), 2)
+
+        return { "pnl": pnl, "turnover": turnover, "stt_total": stt_total, "etc": etc, "stax": stax, "sebi_charges": sebi_charges, "stamp_charges": stamp_charges, "total_tax": total_tax, "breakeven": breakeven, "net_profit": net_profit }

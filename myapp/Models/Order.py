@@ -40,7 +40,6 @@ class Order:
     def getOne(self, query={}):
         try:
             Order = self.order
-            print(query)
             result = Order.find_one(query)
 
             return {"status": True, "result": result}
@@ -50,7 +49,6 @@ class Order:
     
     def getAll(self, query={}, sort=[()]):
         try:
-            print(query)
             Order = self.order
             df = pd.DataFrame(Order.find(query).sort(sort))
             df = df.fillna(0)

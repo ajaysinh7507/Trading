@@ -21,7 +21,7 @@ class KiteController:
     def getHistoricalData(request, script_instrument_token):
         
         api_key = "o40me2j1newtpkip"
-        access_token = "b3kDWd4fhRWNlGTagHsAH0xC4cDnpD5E"
+        access_token = "9rQ30OnI56S8RGsldgGyKElqvElR3JOK"
         interval = "minute"
 
         instrument_token = script_instrument_token
@@ -62,7 +62,7 @@ class KiteController:
     def orderPlace(request):
         try:
             api_key = "o40me2j1newtpkip"
-            access_token = "b3kDWd4fhRWNlGTagHsAH0xC4cDnpD5E"
+            access_token = "9rQ30OnI56S8RGsldgGyKElqvElR3JOK"
             
             auth = request.auth
             body = request.POST
@@ -101,7 +101,7 @@ class KiteController:
 
     def orderPostBack(request):
         api_key = "o40me2j1newtpkip"
-        access_token = "b3kDWd4fhRWNlGTagHsAH0xC4cDnpD5E"
+        access_token = "9rQ30OnI56S8RGsldgGyKElqvElR3JOK"
 
         current_date = datetime.today().strftime('%Y-%m-%d')
         current_time = datetime.today().strftime("%H:%M:%S")
@@ -146,6 +146,9 @@ class KiteController:
 
         user_id = order["user_id"]
         
+        if status=="COMPLETE" and not pending_quantity == 0:
+            status = "PENDING"
+
         update_order = OrderClass.Order().update({"order_id": order_id}, {"kite_user_id": kite_user_id, "filled_quantity": filled_quantity, "pending_quantity": pending_quantity, "cancelled_quantity": cancelled_quantity,"trigger_price": trigger_price, "price": price, "average_price":average_price, "order_timestamp": order_timestamp,"status": status})
 
         if not update_order["status"]:
@@ -189,18 +192,22 @@ class KiteController:
                     OrderClass.Order().update({"order_id": old_order['order_id']}, {"square_off": "COMPLETE", "remaining_quantity": 0})
                     
                     trade_data = { "user_id": user_id, "kite_user_id": kite_user_id, "order_id": order_id, "tradingsymbol": tradingsymbol, "exchange": exchange, "instrument_token": instrument_token, "product": product, "quantity":old_order["remaining_quantity"], "buy_price": buy_price, "sell_price": sell_price, "buy_time": buy_time, "sell_time": sell_time }
+
+                    brokerage_data = TradeClass.Trade().calculateBrokerage(buy_price, sell_price, old_order["remaining_quantity"])
                     
-                    TradeClass.Trade().create(trade_data)
+                    TradeClass.Trade().create({**trade_data, **brokerage_data})
                 else:
                     order_remaining_qty = old_order["remaining_quantity"] - total_qty
                     OrderClass.Order().update({"order_id": old_order['order_id']}, {"remaining_quantity": order_remaining_qty})
                     
                     trade_data = { "user_id": user_id, "kite_user_id": kite_user_id, "order_id": order_id, "tradingsymbol": tradingsymbol, "exchange": exchange, "instrument_token": instrument_token, "product": product, "quantity":total_qty, "buy_price": buy_price, "sell_price": sell_price, "buy_time": buy_time, "sell_time": sell_time }
+
+                    brokerage_data = TradeClass.Trade().calculateBrokerage(buy_price, sell_price, total_qty)
                     
-                    TradeClass.Trade().create(trade_data)
+                    TradeClass.Trade().create({**trade_data, **brokerage_data})
                 
                 total_qty -= old_order["remaining_quantity"]
-                if(total_qty <= 0): continue
+                if(total_qty <= 0): break
             
             if total_qty > 0:
                 OrderClass.Order().update({"order_id": order_id}, {"remaining_quantity": total_qty})
