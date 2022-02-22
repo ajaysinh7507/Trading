@@ -17,7 +17,7 @@ class ScriptController:
         script_name = request.GET.get('script_name')
         current_date = datetime.today().strftime('%Y-%m-%d')
         
-        script = ScriptClass.Script().getOne({"name": script_name, "expiry":{ "$gte": current_date }, "instrument_type": "FUT", "status": True})
+        script = ScriptClass.Script().getOne({"name": script_name, "expiry":{ "$gte": current_date }, "instrument_type": "FUT"})
         script = script['result']
 
         sub_script = ScriptClass.Script().getOne({"$query": {"name": script_name, "expiry":{ "$gte": current_date }, "instrument_type": {"$ne": "FUT"}}, "$orderby": { "expiry" : 1 }})

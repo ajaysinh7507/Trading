@@ -21,7 +21,7 @@ class KiteController:
     def getHistoricalData(request, script_instrument_token):
         
         api_key = "o40me2j1newtpkip"
-        access_token = "9rQ30OnI56S8RGsldgGyKElqvElR3JOK"
+        access_token = "zW5RjZ50oSp9bUZaHw09m2G0AfO3mbHK"
         interval = "minute"
 
         instrument_token = script_instrument_token
@@ -62,7 +62,7 @@ class KiteController:
     def orderPlace(request):
         try:
             api_key = "o40me2j1newtpkip"
-            access_token = "9rQ30OnI56S8RGsldgGyKElqvElR3JOK"
+            access_token = "zW5RjZ50oSp9bUZaHw09m2G0AfO3mbHK"
             
             auth = request.auth
             body = request.POST
@@ -101,7 +101,7 @@ class KiteController:
 
     def orderPostBack(request):
         api_key = "o40me2j1newtpkip"
-        access_token = "9rQ30OnI56S8RGsldgGyKElqvElR3JOK"
+        access_token = "zW5RjZ50oSp9bUZaHw09m2G0AfO3mbHK"
 
         current_date = datetime.today().strftime('%Y-%m-%d')
         current_time = datetime.today().strftime("%H:%M:%S")
@@ -191,7 +191,7 @@ class KiteController:
                 if old_order["remaining_quantity"] < total_qty:
                     OrderClass.Order().update({"order_id": old_order['order_id']}, {"square_off": "COMPLETE", "remaining_quantity": 0})
                     
-                    trade_data = { "user_id": user_id, "kite_user_id": kite_user_id, "order_id": order_id, "tradingsymbol": tradingsymbol, "exchange": exchange, "instrument_token": instrument_token, "product": product, "quantity":old_order["remaining_quantity"], "buy_price": buy_price, "sell_price": sell_price, "buy_time": buy_time, "sell_time": sell_time }
+                    trade_data = { "user_id": user_id, "kite_user_id": kite_user_id, "order_id": order_id, "tradingsymbol": tradingsymbol, "exchange": exchange, "instrument_token": instrument_token, "product": product, "quantity":old_order["remaining_quantity"], "buy_price": buy_price, "sell_price": sell_price, "buy_time": buy_time, "sell_time": sell_time, "date": current_date+" "+current_time }
 
                     brokerage_data = TradeClass.Trade().calculateBrokerage(buy_price, sell_price, old_order["remaining_quantity"])
                     
@@ -200,7 +200,7 @@ class KiteController:
                     order_remaining_qty = old_order["remaining_quantity"] - total_qty
                     OrderClass.Order().update({"order_id": old_order['order_id']}, {"remaining_quantity": order_remaining_qty})
                     
-                    trade_data = { "user_id": user_id, "kite_user_id": kite_user_id, "order_id": order_id, "tradingsymbol": tradingsymbol, "exchange": exchange, "instrument_token": instrument_token, "product": product, "quantity":total_qty, "buy_price": buy_price, "sell_price": sell_price, "buy_time": buy_time, "sell_time": sell_time }
+                    trade_data = { "user_id": user_id, "kite_user_id": kite_user_id, "order_id": order_id, "tradingsymbol": tradingsymbol, "exchange": exchange, "instrument_token": instrument_token, "product": product, "quantity":total_qty, "buy_price": buy_price, "sell_price": sell_price, "buy_time": buy_time, "sell_time": sell_time, "date": current_date+" "+current_time }
 
                     brokerage_data = TradeClass.Trade().calculateBrokerage(buy_price, sell_price, total_qty)
                     

@@ -47,7 +47,7 @@ class Order:
             print(e)
             return {"status": False, "error": e}
     
-    def getAll(self, query={}, sort=[()]):
+    def getAll(self, query={}, sort=[("order_timestamp", 1)]):
         try:
             Order = self.order
             df = pd.DataFrame(Order.find(query).sort(sort))

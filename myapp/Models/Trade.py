@@ -35,6 +35,7 @@ class Trade:
                         "total_tax":  float,
                         "breakeven":  float,
                         "net_profit":  float,
+                        "date": str
                     }
 
     def getOne(self, query={}):
@@ -47,10 +48,10 @@ class Trade:
             print(e)
             return {"status": False, "error": e}
     
-    def getAll(self, query={}, sort={}):
+    def getAll(self, query={}, sort=[("date", 1)]):
         try:
             Trade = self.trade
-            df = pd.DataFrame(Trade.find(query))
+            df = pd.DataFrame(Trade.find(query).sort(sort))
             df = df.fillna(0)
             result = df.to_dict('records')
             
